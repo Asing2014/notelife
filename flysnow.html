@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>雪花飞舞--在一片雪花飞舞的幻境里</title>
+		<!--雪花飘落效果-->
+		<!--
+		实现逻辑
+		创建若干个不同大小的雪花图案，其中最大为30，最小为15
+		通过定时器控制雪花移动
+		当雪花移动的到屏幕外，让它回到最左或者最上面的位置
+		-->
+		<script type="text/javascript">
+			var windowWidth;
+			var windowHeight;
+			function createSnow () {
+				var left = 0;
+				var top = 0;
+				var left_random = Math.random()*windowWidth;
+				var top_random  = Math.random()*windowHeight;
+				var div = document.createElement("div");
+				div.innerHTML = "&#10052";
+				div.style.fontSize = 15+(Math.random())*3*5 + "px";
+				div.style.position = "absolute";
+				document.body.appendChild(div);
+				//雪花飘落
+				setInterval(function(){
+					div.style.left = left_random + left + "px";
+					div.style.top = top_random + top + "px";
+					left +=0.2;
+					top +=0.2;
+					//如果雪花跑到屏幕外面了，让雪花重新返回屏幕顶部
+					if(left_random + left >= windowWidth){
+						left_random = Math.random();
+						left = 0;
+					}
+					if(top_random+top >=windowHeight){
+						top_random = Math.random();
+						top = 0;
+					}
+				},10);
+			}
+			function start()
+			{
+				//赋值
+				windowWidth = document.body.clientWidth - 50;
+				windowHeight = document.body.clientHeight>0?document.body.clientHeight:600 - 50;
+				for(var i=0;i<99;i++)
+				{
+					createSnow();
+				}
+			}
+		</script>
+		<style type="text/css">
+			body
+			{
+				background-color: #d6ecf0;
+				color:#f0fcff;
+			}
+		</style>
+	</head>
+	<body onload="start()">
+	</body>
+</html>
